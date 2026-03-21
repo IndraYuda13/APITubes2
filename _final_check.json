@@ -1,0 +1,10 @@
+{
+  "artifacts": [
+    "simasu.db",
+    "uploads"
+  ],
+  "env_example": [
+    "JWT_SECRET_KEY=change-me",
+    "PORT=5000"
+  ]
+}

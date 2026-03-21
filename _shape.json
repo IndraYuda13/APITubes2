@@ -1,0 +1,45 @@
+{
+  "routes": [
+    {
+      "path": "/uploads",
+      "handler": "express"
+    },
+    {
+      "path": "/api",
+      "handler": "authRoutes"
+    },
+    {
+      "path": "/api/inventory",
+      "handler": "inventoryRoutes"
+    },
+    {
+      "path": "/api/bookings",
+      "handler": "bookingRoutes"
+    },
+    {
+      "path": "/api/rooms",
+      "handler": "roomRoutes"
+    },
+    {
+      "path": "/api/events",
+      "handler": "eventRoutes"
+    },
+    {
+      "path": "/api/announcements",
+      "handler": "announcementRoutes"
+    },
+    {
+      "path": "/docs",
+      "handler": "noCache"
+    }
+  ],
+  "subdirs": [
+    "config",
+    "controllers",
+    "docs",
+    "middleware",
+    "models",
+    "routes",
+    "utils"
+  ]
+}
