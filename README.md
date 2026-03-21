@@ -1,79 +1,106 @@
 # APITubes2
 
-Backend API project built with Node.js and Express for application workflows such as authentication, data management, and related service endpoints.
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white)
+![Database](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white)
+![Docs](https://img.shields.io/badge/API-Swagger-85EA2D?logo=swagger&logoColor=222)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
-## Overview
+Backend API project built with Node.js and Express for application workflows such as authentication, rooms, bookings, inventory, events, announcements, and file uploads.
 
-`APITubes2` is being prepared from a private deployment-oriented project into a cleaner public repository that is safer to publish and easier to understand.
-
-The goal of this repository is to present the project as a technical showcase without exposing private runtime state from the original environment.
+This repository is a cleaned public showcase extracted from a private deployment-oriented project. The goal is to present the actual source structure and API flow without exposing local runtime state such as private `.env` values, local SQLite artifacts, or upload contents.
 
 ## Highlights
 
 - Express-based REST API backend
-- application configuration through environment variables
-- modular route/config structure
-- local development support with npm scripts
-- Swagger-oriented API documentation flow in source
+- modular route/controller/model structure
+- JWT-oriented authentication flow
+- Sequelize + SQLite local persistence path
+- Swagger UI documentation in-source
+- safe public packaging with `.env.example` and runtime exclusions
 
-## Current Focus
+## Route groups
 
-This public version is intentionally positioned as a **clean source showcase**:
+Current route mounts in `server.js`:
 
-- runtime-only artifacts are excluded
-- `.env.example` is provided instead of private `.env`
-- generated files, logs, uploads, and local database artifacts are not included
+- `/api` - authentication and user-related routes
+- `/api/inventory` - inventory routes
+- `/api/bookings` - booking routes
+- `/api/rooms` - room routes
+- `/api/events` - event routes
+- `/api/announcements` - announcement routes
+- `/uploads` - static upload serving
+- `/docs` - Swagger UI
 
-## Repository Contents
+## Tech stack
 
-Key files and folders in this public candidate include:
+- Node.js
+- Express
+- Sequelize
+- SQLite
+- JWT
+- Multer
+- Swagger UI / swagger-jsdoc
+
+## Repository contents
+
+Key folders and files:
 
 - `server.js`
-- `package.json`
 - `config/`
-- `routes/`
+- `controllers/`
 - `middleware/`
+- `models/`
+- `routes/`
 - `utils/`
 - `docs/`
 - `.env.example`
 
-## Getting Started
+## Quick start
 
-Install dependencies:
-
+### 1. Install dependencies
 ```bash
 npm install
 ```
 
-Prepare local environment:
-
+### 2. Prepare environment
 ```bash
 cp .env.example .env
 ```
 
-Run the project using the script defined in `package.json`, for example:
+Current public example variables:
+- `JWT_SECRET_KEY`
+- `PORT`
 
+### 3. Run the server
 ```bash
-npm run dev
+npm start
+```
+
+### 4. Open the docs
+Typical local URLs:
+
+```text
+http://localhost:5000/docs
+http://localhost:5000/apispec_1.json
 ```
 
 ## Documentation
 
-Additional notes are available in:
-
 - `docs/QUICKSTART.md`
 - `docs/API_OVERVIEW.md`
+- `docs/PROJECT_STRUCTURE.md`
 
-## Publication Notes
+## Public packaging notes
 
-This repository is part of an ongoing cleanup/extraction process from a larger private workspace. Because of that:
+This public version intentionally excludes:
 
-- runtime credentials are intentionally excluded
-- deployment-only files are intentionally excluded
-- some project documentation may continue to improve over time
+- private `.env` values
+- local database files
+- upload contents
+- logs and deployment-only artifacts
 
 ## Status
 
 Current state: **public showcase candidate**.
 
-This means the repository is already useful as a portfolio/backend showcase, while still being gradually improved for cleaner public presentation.
+That means the repo is already presentable as a backend/API portfolio item, while still open to future cleanup, tests, and documentation expansion.
