@@ -31,6 +31,18 @@ app.use("/api/rooms", roomRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/announcements", announcementRoutes);
 
+app.get("/", (req, res) => {
+  res.json({
+    status: 200,
+    message: "APITubes2 is running",
+    data: {
+      service: "APITubes2",
+      docs: "/docs",
+      apispec: "/apispec_1.json"
+    }
+  });
+});
+
 // Swagger
 app.get("/apispec_1.json", noCache, (req, res) => res.json(swaggerSpec));
 app.use("/docs", noCache, swaggerUi.serve, swaggerUi.setup(swaggerSpec, { customSiteTitle: "SIMASU API" }));
