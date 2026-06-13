@@ -24,7 +24,9 @@ exports.update = async (req, res) => {
 
   const data = req.body || {};
   if (data.name !== undefined) item.name = data.name;
+  if (data.category !== undefined) item.category = data.category;
   if (data.stock !== undefined) item.stock = Number(data.stock);
+  if (data.description !== undefined) item.description = data.description;
   
   item.status = item.stock > 0 ? "Tersedia" : "Habis";
   await item.save();

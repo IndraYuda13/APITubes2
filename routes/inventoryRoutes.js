@@ -48,7 +48,9 @@ const { jwtRequired, adminOnly } = require("../middleware/authMiddleware");
  * "type": "object",
  * "properties": {
  * "name": { "type": "string" },
- * "stock": { "type": "integer" }
+ * "category": { "type": "string" },
+ * "stock": { "type": "integer" },
+ * "description": { "type": "string" }
  * }
  * }
  * }
