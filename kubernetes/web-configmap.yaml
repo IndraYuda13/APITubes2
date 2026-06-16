@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  namespace: myapp
+data:
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+  APP_URL: "http://localhost:8000"
+  DB_CONNECTION: "mysql"
+  DB_HOST: "mysql-service"
+  DB_PORT: "3306"
+  DB_DATABASE: "simasu_db"
+  DB_USERNAME: "simasu_user"
+  SESSION_DRIVER: "file"
+  API_URL: "http://api-service:5000" # URL service api backend di cluster k8s
