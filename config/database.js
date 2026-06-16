@@ -9,7 +9,7 @@ const sequelize = process.env.DB_HOST
     })
   : new Sequelize({
       dialect: "sqlite",
-      storage: "simasu.db",
+      storage: process.env.DB_STORAGE || "simasu.db",
       logging: false,
     });
 
