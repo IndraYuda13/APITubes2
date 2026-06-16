@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: indrayuda13/simasu-web:latest # Menggunakan image dari Docker Hub yang nanti di-push Anggota 1
+          image: indrayuda/simasu-web:latest # Menggunakan image dari Docker Hub yang nanti di-push Anggota 1
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
