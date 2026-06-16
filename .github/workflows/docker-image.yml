@@ -32,5 +32,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            yudhapakel/api-tubes2:latest
-            yudhapakel/api-tubes2:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/api-tubes2:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/api-tubes2:${{ github.sha }}
