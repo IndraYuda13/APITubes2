@@ -1,0 +1,20 @@
+# api-service-patched.yaml
+# Patch untuk api-service: tambahkan named port "http" supaya ServiceMonitor bisa match
+# Ini MENGGANTIKAN service di api-deployment.yaml milik Yudha
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: myapp
+  labels:
+    app: api
+spec:
+  selector:
+    app: api
+  ports:
+    - name: http          # <-- WAJIB ada name supaya ServiceMonitor bisa reference
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP

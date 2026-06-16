@@ -1,0 +1,117 @@
+# prometheus-values.yaml
+# Custom values untuk kube-prometheus-stack di project SIMASU
+# Namespace: monitoring
+
+# ============================================
+# PROMETHEUS SERVER
+# ============================================
+prometheus:
+  prometheusSpec:
+    # Retention data 7 hari
+    retention: 7d
+
+    # Scrape semua ServiceMonitor di semua namespace
+    serviceMonitorSelectorNilLabelSelector: true
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelector: {}
+
+    # Scrape semua PodMonitor di semua namespace
+    podMonitorSelectorNilLabelSelector: true
+    podMonitorNamespaceSelector: {}
+    podMonitorSelector: {}
+
+    # Resource limits (sesuai Minikube)
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 512Mi
+        cpu: 300m
+
+    # Storage (persistent)
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+  # Expose Prometheus via NodePort biar bisa diakses dari luar Minikube
+  service:
+    type: NodePort
+    nodePort: 30090
+
+# ============================================
+# GRAFANA (disable — Azwa handles this separately)
+# ============================================
+grafana:
+  enabled: false
+
+# ============================================
+# ALERTMANAGER (basic, enabled)
+# ============================================
+alertmanager:
+  alertmanagerSpec:
+    resources:
+      requests:
+        memory: 64Mi
+        cpu: 50m
+      limits:
+        memory: 128Mi
+        cpu: 100m
+  service:
+    type: NodePort
+    nodePort: 30093
+
+# ============================================
+# NODE EXPORTER (metrics dari node/host)
+# ============================================
+nodeExporter:
+  enabled: true
+
+# ============================================
+# KUBE-STATE-METRICS (metrics dari K8s objects)
+# ============================================
+kubeStateMetrics:
+  enabled: true
+
+# ============================================
+# ADDITIONAL SCRAPE CONFIGS
+# Scrape backend API SIMASU (api-service di namespace myapp, port 5000)
+# ============================================
+additionalPrometheusRulesMap:
+  simasu-api-rules:
+    groups:
+      - name: simasu-api-alerts
+        rules:
+          # Alert jika API backend down > 1 menit
+          - alert: SimasuApiDown
+            expr: up{job="simasu-api"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "SIMASU API Backend is DOWN"
+              description: "The SIMASU API backend ({{ $labels.instance }}) has been down for more than 1 minute."
+
+          # Alert jika response time > 1 detik
+          - alert: SimasuApiHighLatency
+            expr: rate(http_request_duration_seconds_sum{job="simasu-api"}[5m]) / rate(http_request_duration_seconds_count{job="simasu-api"}[5m]) > 1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "SIMASU API High Latency"
+              description: "SIMASU API average response time is above 1 second."
+
+          # Alert jika pod restart > 3x dalam 15 menit
+          - alert: SimasuPodCrashLooping
+            expr: increase(kube_pod_container_status_restarts_total{namespace="myapp"}[15m]) > 3
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Pod CrashLooping di namespace myapp"
+              description: "Pod {{ $labels.pod }} sudah restart {{ $value }} kali dalam 15 menit terakhir."

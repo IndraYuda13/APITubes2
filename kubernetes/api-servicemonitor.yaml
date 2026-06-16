@@ -1,0 +1,24 @@
+# api-servicemonitor.yaml
+# ServiceMonitor untuk scrape metrics dari backend API SIMASU
+# Deploy ke namespace monitoring, target service di namespace myapp
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: simasu-api-monitor
+  namespace: monitoring
+  labels:
+    app: simasu-api
+    release: prometheus  # label ini penting supaya Prometheus operator auto-discover
+spec:
+  namespaceSelector:
+    matchNames:
+      - myapp
+  selector:
+    matchLabels:
+      app: api   # harus match dengan label di api-service (namespace myapp)
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+      scrapeTimeout: 10s
