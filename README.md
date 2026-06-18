@@ -76,7 +76,12 @@ Current public example variables:
 npm start
 ```
 
-### 4. Open the docs
+### 4. Run tests
+```bash
+npm test
+```
+
+### 5. Open the docs
 Typical local URLs:
 
 ```text
