@@ -50,13 +50,17 @@ app.use("/docs", noCache, swaggerUi.serve, swaggerUi.setup(swaggerSpec, { custom
 // --- SERVER START ---
 const PORT = process.env.PORT || 5001;
 
-// Init DB & Seeding
-sequelize.sync().then(async () => {
-  await seeder.runSeed(); // Asumsi Anda memindahkan logika seeding ke utils/seeder.js
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
-    console.log(`Docs: http://0.0.0.0:${PORT}/docs`);
+// Hanya jalankan listen jika file ini tidak di-require (misal saat testing)
+if (process.env.NODE_ENV !== "test") {
+  sequelize.sync().then(async () => {
+    await seeder.runSeed();
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on http://0.0.0.0:${PORT}`);
+      console.log(`Docs: http://0.0.0.0:${PORT}/docs`);
+    });
+  }).catch((err) => {
+    console.error("Gagal init DB:", err);
   });
-}).catch((err) => {
-  console.error("Gagal init DB:", err);
-});
+}
+
+module.exports = app;

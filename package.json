@@ -4,8 +4,9 @@
   "description": "Express-based backend API showcase with authentication, bookings, rooms, inventory, events, announcements, and Swagger docs.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit",
+    "test:coverage": "NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit --coverage"
   },
   "keywords": [
     "express",
@@ -31,5 +32,9 @@
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
   }
 }
