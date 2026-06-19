@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit",
+    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit",
     "test:coverage": "NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit --coverage"
   },
   "keywords": [
@@ -34,6 +34,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "jest": "^30.4.2",
     "supertest": "^7.2.2"
   }
